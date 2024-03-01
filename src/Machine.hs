@@ -1,8 +1,8 @@
 module Machine (Machine (..)) where
 
 import Executor
-import ExecutorLocal
-import ExecutorRemote
+import Local.Executor
+import Remote.Executor
 import Ssh
 
 data Machine = LocalMachine | RemoteMachine SshCredentials

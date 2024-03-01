@@ -1,4 +1,4 @@
-module ExecutorLocal
+module Local.Executor
   ( executeLocalShellCmdIO,
     executeLocalShellCmdErrIO,
     runLocalShellCmdIO,
@@ -14,7 +14,7 @@ import System.Process
 -- Execute an external command and return its output combined with error
 executeLocalShellCmdIO :: String -> IO (ExitCode, String)
 executeLocalShellCmdIO cmd = do
-  putStrLn (cmd)
+  putStrLn cmd
   (readEnd, writeEnd) <- createPipe
   withCreateProcess_
     "executeShellCmd"
@@ -31,7 +31,7 @@ executeLocalShellCmdIO cmd = do
 -- Execute an external command and return its output
 executeLocalShellCmdErrIO :: String -> IO (ExitCode, String, String)
 executeLocalShellCmdErrIO cmd = do
-  putStrLn (cmd)
+  putStrLn cmd
   (readEnd, writeEnd) <- createPipe
   (readErrEnd, writeErrEnd) <- createPipe
   withCreateProcess_
@@ -50,7 +50,7 @@ executeLocalShellCmdErrIO cmd = do
 -- Run an external command
 runLocalShellCmdIO :: String -> IO ExitCode
 runLocalShellCmdIO cmd = do
-  putStrLn (cmd)
+  putStrLn cmd
   withCreateProcess_
     "runShellCmd"
     (shell cmd) {delegate_ctlc = True}

@@ -10,7 +10,7 @@ where
 import Core.Common
 import Data.List (intercalate)
 import Executor
-import ExecutorLocal
+import Local.Executor
 import Machine
 import Ssh
 import System.FilePath ((</>))
@@ -29,7 +29,7 @@ data RsyncDestination = RsyncDst Machine FilePath
   deriving (Eq)
 
 instance Show RsyncDestination where
-  show (RsyncDst (LocalMachine) fp) = fp
+  show (RsyncDst LocalMachine fp) = fp
   show (RsyncDst (RemoteMachine (SshCredentials username hostname _ _)) fp) = username <> "@" <> hostname <> ":" <> fp
 
 data RsyncOption = Exclude String
@@ -45,10 +45,10 @@ instance Show RsyncOption where
 rsync :: RsyncSource -> RsyncDestination -> [RsyncOption] -> IO ExitCode
 rsync src dst opts = case buildRsyncCmd src dst opts of
   (Just cmd) -> runLocalShellCmdIO cmd
-  (Nothing) -> skipRsyncIO
+  Nothing -> skipRsyncIO
 
 buildRsyncCmd :: RsyncSource -> RsyncDestination -> [RsyncOption] -> Maybe String
-buildRsyncCmd _ (RsyncDst (LocalMachine) _) _ = Nothing
+buildRsyncCmd _ (RsyncDst LocalMachine _) _ = Nothing
 buildRsyncCmd src dst opts = Just ("rsync" <> showDstOpts dst <> showDefaultOpts <> showOpts opts <> " " <> show src <> " " <> show dst)
 
 showDstOpts :: RsyncDestination -> String
@@ -67,7 +67,7 @@ showOpts :: [RsyncOption] -> String
 showOpts [] = ""
 showOpts opts = " " <> join list
   where
-    join = intercalate " "
+    join = unwords
     list = map show opts
 
 showDefaultOpts :: String
@@ -75,5 +75,5 @@ showDefaultOpts = " --archive --relative --delete --verbose -o"
 
 skipRsyncIO :: IO ExitCode
 skipRsyncIO = do
-  println ("skipping rsync, both source and destination machines are local")
+  println "skipping rsync, both source and destination machines are local"
   return ExitSuccess

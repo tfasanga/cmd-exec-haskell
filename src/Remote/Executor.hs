@@ -1,11 +1,11 @@
-module ExecutorRemote
+module Remote.Executor
   ( executeRemoteShellCmdIO,
     runRemoteShellCmdIO,
   )
 where
 
 import Executor (ExitCode)
-import ExecutorLocal
+import Local.Executor
 import Ssh
 
 executeRemoteShellCmdIO :: SshCommand -> IO (ExitCode, String)

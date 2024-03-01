@@ -48,12 +48,12 @@ escapeQuotes =
         case c of
           a@'\'' -> ['\\', a]
           _ -> [c]
-   in concat . map escapeOneChar
+   in concatMap escapeOneChar
 
 -- Alternative
 
 _escapeQuotes :: String -> String
-_escapeQuotes = concat . map escapeChar
+_escapeQuotes = concatMap escapeChar
 
 escapeChar :: Char -> String
 escapeChar ch = case lookup ch escapesAlist of

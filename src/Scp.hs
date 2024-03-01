@@ -2,7 +2,7 @@ module Scp (scp, ScpFilePath, scpFp) where
 
 import Core.Common
 import Executor
-import ExecutorLocal
+import Local.Executor
 import Machine
 import Ssh
 
@@ -19,11 +19,11 @@ scpFp = ScpFp
 scp :: ScpFilePath -> ScpFilePath -> IO ExitCode
 scp src dst = case buildScpCmd src dst of
   (Just cmd) -> runLocalShellCmdIO cmd
-  (Nothing) -> skipScpIO
+  Nothing -> skipScpIO
 
 skipScpIO :: IO ExitCode
 skipScpIO = do
-  println ("skipping scp, both source and destination machines are local")
+  println "skipping scp, both source and destination machines are local"
   return ExitSuccess
 
 buildScpCmd :: ScpFilePath -> ScpFilePath -> Maybe String
@@ -38,5 +38,5 @@ sshCredentialsToScpUri :: SshCredentials -> String
 sshCredentialsToScpUri (SshCredentials username hostname port _) = "scp://" <> username <> "@" <> hostname <> showPortOpt port
 
 showPortOpt :: Maybe PortNum -> String
-showPortOpt (Nothing) = ""
+showPortOpt Nothing = ""
 showPortOpt (Just port) = ":" <> show port

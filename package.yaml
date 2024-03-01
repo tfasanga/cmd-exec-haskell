@@ -1,0 +1,90 @@
+name:                cmdexec
+version:             0.1.0.0
+github:              "tfasanga/cmd-exec-haskell"
+license:             BSD-3-Clause
+author:              "Tibor Fasanga"
+maintainer:          "tibor@fasanga.com"
+copyright:           "2024 Tibor Fasanga"
+
+extra-source-files:
+- README.md
+- CHANGELOG.md
+
+# Metadata used when publishing your package
+# synopsis:            Short description of your package
+# category:            cli
+
+description:         Please see the README on GitHub at <https://github.com/tfasanga/cmd-exec-haskell/blob/main/README.md>
+
+dependencies:
+- base >= 4.7 && < 5
+
+default-extensions:
+  - DisambiguateRecordFields
+  - DuplicateRecordFields
+  - RecordWildCards
+  - GeneralizedNewtypeDeriving
+  - NoFieldSelectors
+
+ghc-options:
+- -Wall
+- -Wno-unused-imports
+- -Wno-unused-top-binds
+- -Wno-type-defaults
+- -Wmissing-export-lists
+- -Wcompat
+- -Widentities
+- -Wincomplete-record-updates
+- -Wincomplete-uni-patterns
+- -Wmissing-home-modules
+- -Wpartial-fields
+- -Wredundant-constraints
+
+library:
+  source-dirs: src
+  dependencies:
+    - mtl
+    - split
+    - process
+    - bytestring
+    - aeson
+    - yaml
+    - directory
+    - filepath
+    - transformers
+    - optparse-applicative
+
+tests:
+  clitool-unit-test:
+    main:                Main.hs
+    source-dirs:         test/unit
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - cmdexec
+    - mtl
+    - split
+    - tasty
+    - tasty-hunit
+    - tasty-golden
+    - QuickCheck
+    - tasty-quickcheck
+    - tasty-smallcheck
+    - tasty-program
+
+  clitool-spec-test:
+    main:                Main.hs
+    source-dirs:         test/spec
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - cmdexec
+    - mtl
+    - split
+    - tasty
+    - hspec
+    - tasty-hspec

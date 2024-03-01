@@ -1,0 +1,120 @@
+cabal-version: 2.2
+
+-- This file has been generated from package.yaml by hpack version 0.36.0.
+--
+-- see: https://github.com/sol/hpack
+
+name:           cmdexec
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/tfasanga/cmd-exec-haskell/blob/main/README.md>
+homepage:       https://github.com/tfasanga/cmd-exec-haskell#readme
+bug-reports:    https://github.com/tfasanga/cmd-exec-haskell/issues
+author:         Tibor Fasanga
+maintainer:     tibor@fasanga.com
+copyright:      2024 Tibor Fasanga
+license:        BSD-3-Clause
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+    CHANGELOG.md
+
+source-repository head
+  type: git
+  location: https://github.com/tfasanga/cmd-exec-haskell
+
+library
+  exposed-modules:
+      Core.Common
+      Core.Err
+      Executor
+      ExecutorLocal
+      ExecutorRemote
+      Machine
+      Rsync
+      Scp
+      Ssh
+  other-modules:
+      Paths_cmdexec
+  autogen-modules:
+      Paths_cmdexec
+  hs-source-dirs:
+      src
+  default-extensions:
+      DisambiguateRecordFields
+      DuplicateRecordFields
+      RecordWildCards
+      GeneralizedNewtypeDeriving
+      NoFieldSelectors
+  ghc-options: -Wall -Wno-unused-imports -Wno-unused-top-binds -Wno-type-defaults -Wmissing-export-lists -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
+  build-depends:
+      aeson
+    , base >=4.7 && <5
+    , bytestring
+    , directory
+    , filepath
+    , mtl
+    , optparse-applicative
+    , process
+    , split
+    , transformers
+    , yaml
+  default-language: Haskell2010
+
+test-suite clitool-spec-test
+  type: exitcode-stdio-1.0
+  main-is: Main.hs
+  other-modules:
+      Paths_cmdexec
+  autogen-modules:
+      Paths_cmdexec
+  hs-source-dirs:
+      test/spec
+  default-extensions:
+      DisambiguateRecordFields
+      DuplicateRecordFields
+      RecordWildCards
+      GeneralizedNewtypeDeriving
+      NoFieldSelectors
+  ghc-options: -Wall -Wno-unused-imports -Wno-unused-top-binds -Wno-type-defaults -Wmissing-export-lists -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , cmdexec
+    , hspec
+    , mtl
+    , split
+    , tasty
+    , tasty-hspec
+  default-language: Haskell2010
+
+test-suite clitool-unit-test
+  type: exitcode-stdio-1.0
+  main-is: Main.hs
+  other-modules:
+      RsyncTest
+      SshTest
+      Paths_cmdexec
+  autogen-modules:
+      Paths_cmdexec
+  hs-source-dirs:
+      test/unit
+  default-extensions:
+      DisambiguateRecordFields
+      DuplicateRecordFields
+      RecordWildCards
+      GeneralizedNewtypeDeriving
+      NoFieldSelectors
+  ghc-options: -Wall -Wno-unused-imports -Wno-unused-top-binds -Wno-type-defaults -Wmissing-export-lists -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      QuickCheck
+    , base >=4.7 && <5
+    , cmdexec
+    , mtl
+    , split
+    , tasty
+    , tasty-golden
+    , tasty-hunit
+    , tasty-program
+    , tasty-quickcheck
+    , tasty-smallcheck
+  default-language: Haskell2010
